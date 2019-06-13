@@ -1,0 +1,91 @@
+# -*- coding: utf-8 -*-
+
+# Form implementation generated from reading ui file 'd:\stone\stone2.ui'
+#
+# Created by: PyQt5 UI code generator 5.9.2
+#
+# WARNING! All changes made in this file will be lost!
+
+from PyQt5 import QtCore, QtGui, QtWidgets
+
+class Ui_Form1(object):
+    def setupUi(self, Form):
+        Form.setObjectName("Form")
+        Form.setEnabled(True)
+        Form.resize(640, 480)
+        self.gridLayout_2 = QtWidgets.QGridLayout(Form)
+        self.gridLayout_2.setObjectName("gridLayout_2")
+        self.horizontalLayout_3 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_3.setObjectName("horizontalLayout_3")
+        self.Btn_OK = QtWidgets.QPushButton(Form)
+        self.Btn_OK.setMaximumSize(QtCore.QSize(50, 16777215))
+        self.Btn_OK.setObjectName("Btn_OK")
+        self.horizontalLayout_3.addWidget(self.Btn_OK)
+        self.gridLayout_2.addLayout(self.horizontalLayout_3, 3, 0, 1, 1)
+        self.horizontalLayout = QtWidgets.QHBoxLayout()
+        self.horizontalLayout.setObjectName("horizontalLayout")
+        self.pushButton_2 = QtWidgets.QPushButton(Form)
+        self.pushButton_2.setMinimumSize(QtCore.QSize(0, 125))
+        self.pushButton_2.setObjectName("pushButton_2")
+        self.horizontalLayout.addWidget(self.pushButton_2)
+        self.pushButton = QtWidgets.QPushButton(Form)
+        self.pushButton.setMinimumSize(QtCore.QSize(0, 125))
+        self.pushButton.setObjectName("pushButton")
+        self.horizontalLayout.addWidget(self.pushButton)
+        self.pushButton_3 = QtWidgets.QPushButton(Form)
+        self.pushButton_3.setMinimumSize(QtCore.QSize(0, 125))
+        self.pushButton_3.setObjectName("pushButton_3")
+        self.horizontalLayout.addWidget(self.pushButton_3)
+        self.gridLayout_2.addLayout(self.horizontalLayout, 0, 0, 1, 1)
+        self.horizontalLayout_2 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_2.setObjectName("horizontalLayout_2")
+        self.Btn_input1 = QtWidgets.QLineEdit(Form)
+        self.Btn_input1.setMaximumSize(QtCore.QSize(150, 16777215))
+        self.Btn_input1.setObjectName("Btn_input1")
+        self.horizontalLayout_2.addWidget(self.Btn_input1)
+        self.Btn_input2 = QtWidgets.QLineEdit(Form)
+        self.Btn_input2.setMaximumSize(QtCore.QSize(150, 16777215))
+        self.Btn_input2.setObjectName("Btn_input2")
+        self.horizontalLayout_2.addWidget(self.Btn_input2)
+        self.Btn_input3 = QtWidgets.QLineEdit(Form)
+        self.Btn_input3.setMaximumSize(QtCore.QSize(150, 16777215))
+        self.Btn_input3.setObjectName("Btn_input3")
+        self.horizontalLayout_2.addWidget(self.Btn_input3)
+        self.gridLayout_2.addLayout(self.horizontalLayout_2, 2, 0, 1, 1)
+        self.horizontalLayout_4 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_4.setObjectName("horizontalLayout_4")
+        self.Btn_num1 = QtWidgets.QLabel(Form)
+        self.Btn_num1.setMaximumSize(QtCore.QSize(80, 16777215))
+        self.Btn_num1.setObjectName("Btn_num1")
+        self.horizontalLayout_4.addWidget(self.Btn_num1)
+        self.Btn_num2 = QtWidgets.QLabel(Form)
+        self.Btn_num2.setMaximumSize(QtCore.QSize(80, 16777215))
+        self.Btn_num2.setObjectName("Btn_num2")
+        self.horizontalLayout_4.addWidget(self.Btn_num2)
+        self.Btn_num3 = QtWidgets.QLabel(Form)
+        self.Btn_num3.setMaximumSize(QtCore.QSize(80, 16777215))
+        self.Btn_num3.setObjectName("Btn_num3")
+        self.horizontalLayout_4.addWidget(self.Btn_num3)
+        self.horizontalLayout_4.setStretch(0, 1)
+        self.horizontalLayout_4.setStretch(1, 1)
+        self.horizontalLayout_4.setStretch(2, 1)
+        self.gridLayout_2.addLayout(self.horizontalLayout_4, 1, 0, 1, 1)
+        self.gridLayout_2.setRowStretch(0, 4)
+        self.gridLayout_2.setRowStretch(1, 3)
+        self.gridLayout_2.setRowStretch(2, 4)
+        self.gridLayout_2.setRowStretch(3, 4)
+
+        self.retranslateUi(Form)
+        QtCore.QMetaObject.connectSlotsByName(Form)
+
+    def retranslateUi(self, Form):
+        _translate = QtCore.QCoreApplication.translate
+        Form.setWindowTitle(_translate("Form", "catch_stone"))
+        self.Btn_OK.setText(_translate("Form", "确认"))
+        self.pushButton_2.setText(_translate("Form", "石头堆1数量："))
+        self.pushButton.setText(_translate("Form", "石头堆2数量："))
+        self.pushButton_3.setText(_translate("Form", "石头堆3数量："))
+        self.Btn_num1.setText(_translate("Form", "TextLabel"))
+        self.Btn_num2.setText(_translate("Form", "TextLabel"))
+        self.Btn_num3.setText(_translate("Form", "TextLabel"))
+
