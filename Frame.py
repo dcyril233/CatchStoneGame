@@ -41,7 +41,7 @@ class Ui_Frame1(QWidget):
         QMessageBox.about(self, '关于', 'https://github.com/dcyril233/CatchStoneGame')
 
     def OnClick_Rules(self):
-        QMessageBox.about(self, 'rules', '玩家需要设置先手或后手，与电脑依次选择某一石子堆并拾取任意数量的石子，拾走最后一个石子的一方获胜')
+        QMessageBox.about(self, 'rules', '有三堆石子，玩家设置好每一堆的石子数量并选择先手或后手。游戏开始后玩家与电脑依次选定某一石子堆并拾取其中任意数量大于0的石子，拾走最后一个石子的一方获胜。')
 
     def OnClick_Start(self):
         self.hide()
@@ -57,9 +57,9 @@ class Ui_Frame2(QWidget):
         self.ui.setupUi(self)
 
         #设置只能输入int类型的数据
-        self.ui.Btn_input1.setValidator(QtGui.QIntValidator(1, 1000))
-        self.ui.Btn_input2.setValidator(QtGui.QIntValidator(1, 1000))
-        self.ui.Btn_input3.setValidator(QtGui.QIntValidator(1, 1000))
+        self.ui.Btn_input1.setValidator(QtGui.QIntValidator(0, 1000))
+        self.ui.Btn_input2.setValidator(QtGui.QIntValidator(0, 1000))
+        self.ui.Btn_input3.setValidator(QtGui.QIntValidator(0, 1000))
 
         self.ui.Btn_OK.clicked.connect(self.OnClick_OK)
         self.ui.Btn_secondhand.clicked.connect(self.first_second)
@@ -76,27 +76,31 @@ class Ui_Frame2(QWidget):
             num1 = int(self.ui.Btn_input1.text())
             num2 = int(self.ui.Btn_input2.text())
             num3 = int(self.ui.Btn_input3.text())
-            string = [num1, num2, num3, self.order]
-            self.signal.emit(string)
-            self.hide()
-            self.next.show()            
+            if sum([num1, num2, num3]) == 0:
+                if self.order == 0:
+                    QMessageBox.information(self, 'result', 'machine won')
+                    self.hide()
+                else:
+                    QMessageBox.information(self, 'result', 'player won')
+                    self.hide()
+            else:
+                string = [num1, num2, num3, self.order]
+                self.signal.emit(string)
+                self.hide()
+                self.next.show()  
         except:
-            QMessageBox.warning(self, 'warning', '请输入石头数量')
+            QMessageBox.warning(self, 'warning', '请确认信息完整输入')
 
 class Ui_Frame3(QWidget):
     def __init__(self):
         QWidget.__init__(self)
 
         self.num_temp=[]
-        self.Last_Num=[]
+        self.Last_Num=[1000, 1000, 1000]
         self.f_s = 1
 
         self.ui = Ui_Form1()
         self.ui.setupUi(self)
-
-        self.ui.Btn_input1.setValidator(QtGui.QIntValidator(1, 1000))
-        self.ui.Btn_input2.setValidator(QtGui.QIntValidator(1, 1000))
-        self.ui.Btn_input3.setValidator(QtGui.QIntValidator(1, 1000))
 
         self.ui.Btn_OK.clicked.connect(self.OnClick_OK)
 
@@ -104,24 +108,17 @@ class Ui_Frame3(QWidget):
         self.ui.Btn_input2.textEdited[str].connect(lambda :self.auto_input2())
         self.ui.Btn_input3.textEdited[str].connect(lambda :self.auto_input3())
 
-        if self.f_s == 0:
-            num = self.machine(self.num_temp)
-            self.ui.Btn_num1.setText(str(num[0]))
-            self.ui.Btn_num2.setText(str(num[1]))
-            self.ui.Btn_num3.setText(str(num[2]))
-            self.Last_Num = num[:]
-
     def auto_input1(self):
-        self.ui.Btn_input2.setText(str(self.Last_Num[1]))
-        self.ui.Btn_input3.setText(str(self.Last_Num[2]))
+        self.ui.Btn_input2.setText(str(0))
+        self.ui.Btn_input3.setText(str(0))
 
     def auto_input2(self):
-        self.ui.Btn_input1.setText(str(self.Last_Num[0]))
-        self.ui.Btn_input3.setText(str(self.Last_Num[2]))        
+        self.ui.Btn_input1.setText(str(0))
+        self.ui.Btn_input3.setText(str(0))        
 
     def auto_input3(self):
-        self.ui.Btn_input1.setText(str(self.Last_Num[0]))
-        self.ui.Btn_input2.setText(str(self.Last_Num[1]))
+        self.ui.Btn_input1.setText(str(0))
+        self.ui.Btn_input2.setText(str(0))
 
     def yihuo(self, str):
         length = len(str)
@@ -145,30 +142,72 @@ class Ui_Frame3(QWidget):
 
     def OnClick_OK(self):
         try:
-            num1 = int(self.ui.Btn_input1.text())
-            num2 = int(self.ui.Btn_input2.text())
-            num3 = int(self.ui.Btn_input3.text())
-            temp = [num1, num2, num3]
-            if sum(temp) == 0:
-                QMessageBox.information(self, 'result', 'player won')
+            temp1 = int(self.ui.Btn_input1.text())
+            temp2 = int(self.ui.Btn_input2.text())
+            temp3 = int(self.ui.Btn_input3.text())
+            if sum([temp1, temp2, temp3]) == 0:
+                QMessageBox.information(self, 'warning', '请取石子')
+                self.ui.Btn_input1.clear()
+                self.ui.Btn_input2.clear()
+                self.ui.Btn_input3.clear()                
+            else:
+                num1 = self.Last_Num[0] - int(self.ui.Btn_input1.text())
+                num2 = self.Last_Num[1] - int(self.ui.Btn_input2.text())
+                num3 = self.Last_Num[2] - int(self.ui.Btn_input3.text())
+                temp = [num1, num2, num3]
+                self.ui.Btn_num4.setText(str(num1))
+                self.ui.Btn_num5.setText(str(num2))
+                self.ui.Btn_num6.setText(str(num3))
 
-            num = self.machine(temp)
-            self.ui.Btn_num1.setText(str(num[0]))
-            self.ui.Btn_num2.setText(str(num[1]))
-            self.ui.Btn_num3.setText(str(num[2]))
-            if sum(num) == 0:
-                QMessageBox.information(self, 'result', 'machine won')
-            self.Last_Num = num[:]
+                self.ui.Btn_input1.clear()
+                self.ui.Btn_input2.clear()
+                self.ui.Btn_input3.clear()
+
+                if sum(temp) == 0:
+                    QMessageBox.information(self, 'result', 'player won')
+                    self.hide()
+
+                num = self.machine(temp)
+                self.ui.Btn_num1.setText(str(num[0]))
+                self.ui.Btn_num2.setText(str(num[1]))
+                self.ui.Btn_num3.setText(str(num[2]))
+
+                if sum(num) == 0:
+                    QMessageBox.information(self, 'result', 'machine won')
+                    self.hide()
+
+                self.Last_Num = num[:]
+                self.ui.Btn_input1.setValidator(QtGui.QIntValidator(0, self.Last_Num[0]))
+                self.ui.Btn_input2.setValidator(QtGui.QIntValidator(0, self.Last_Num[1]))
+                self.ui.Btn_input3.setValidator(QtGui.QIntValidator(0, self.Last_Num[2]))
         except:
             QMessageBox.warning(self, 'warning', '请输入石头数量')
 
     def signalCall(self, string):
-        self.ui.Btn_num1.setText(str(string[0]))
-        self.ui.Btn_num2.setText(str(string[1]))
-        self.ui.Btn_num3.setText(str(string[2]))
         self.num_temp = string[0:3]
         self.f_s = string[3]
-        self.Last_Num = self.num_temp[:]
+        
+        if self.f_s == 0:
+            num = self.machine(self.num_temp)
+            self.ui.Btn_num1.setText(str(num[0]))
+            self.ui.Btn_num2.setText(str(num[1]))
+            self.ui.Btn_num3.setText(str(num[2]))
+            self.ui.Btn_num4.setText(str(string[0]))
+            self.ui.Btn_num5.setText(str(string[1]))
+            self.ui.Btn_num6.setText(str(string[2]))
+            self.Last_Num = num[:]
+        else:
+            self.ui.Btn_num1.setText(str(string[0]))
+            self.ui.Btn_num2.setText(str(string[1]))
+            self.ui.Btn_num3.setText(str(string[2]))
+            self.ui.Btn_num4.setText(str(None))
+            self.ui.Btn_num5.setText(str(None))
+            self.ui.Btn_num6.setText(str(None))
+            self.Last_Num = self.num_temp[:]
+        self.ui.Btn_input1.setValidator(QtGui.QIntValidator(0, self.Last_Num[0]))
+        self.ui.Btn_input2.setValidator(QtGui.QIntValidator(0, self.Last_Num[1]))
+        self.ui.Btn_input3.setValidator(QtGui.QIntValidator(0, self.Last_Num[2]))
+
 
 class UI:
     def __init__(self):
